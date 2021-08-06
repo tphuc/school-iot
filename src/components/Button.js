@@ -1,11 +1,13 @@
 import React from 'react';
-import './index.css'
 
 
-const Button = ({style,  disabled, ...props}) => {
-    return <div className='button'  {...props}>
+
+const Button = ({style, variant='basic',  disabled, ...props}) => {
+    return <div className={`button ${variant}`}  {...props}>
         {props.children}
     </div>
 }
+
+
 
 export default Button

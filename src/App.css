@@ -1,5 +1,8 @@
-.App {
-  text-align: center;
+body {
+  background-color: #282c34;
+  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-logo {
@@ -13,16 +16,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 .App-link {
   color: #61dafb;
@@ -36,3 +29,47 @@
     transform: rotate(360deg);
   }
 }
+
+.button {
+  padding: 5px 5px;
+  min-width: 30px;
+  height: 30px;
+  cursor: pointer;
+  box-sizing: content-box;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.basic {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.primary {
+  background: rgba(36, 112, 183, 1);
+}
+
+
+.basic:hover {
+  transition: 0.5s ease all;
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.basic:hover {
+  transition: 0.5s ease all;
+  background: rgba(36, 112, 183, 0.8);
+}
+
+
+.input {
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 4px;
+  border-width: 0px;
+  color: #ffffff;
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
