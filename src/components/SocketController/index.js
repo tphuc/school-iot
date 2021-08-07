@@ -4,10 +4,30 @@ import Switch from "react-switch";
 import { db } from '../../services/firebase';
 import Chart from "react-apexcharts";
 import Button from '../Button';
+
+
+const secondsToTime = (secs) => {
+    let hours = Math.floor(secs / (60 * 60));
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "h": hours,
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
+}
+
 const SocketController = () => {
     let { id } = useParams();
 
     const [toggle, setToggle] = React.useState(false);
+    const [timeCount, setTimeCount] = React.useState(0);
 
 
     const _setToggle = async (value) => {
@@ -24,11 +44,25 @@ const SocketController = () => {
     const setInitialState = async () => {
         let res = await db.ref(`/${id}/1`).get()
         setToggle(res.val())
+        updateTimer()
+    }
+
+    const updateTimer = async () => {
+        let res = await db.ref(`/${id}/1/lastToggleOn`).get()
+        let time = Math.floor((new Date().getTime() - new Date(res.val()).getTime())/1000)
+        setTimeCount(time)
+ 
     }
 
     React.useEffect(() => {
        setInitialState()
     }, [])
+
+
+
+    React.useEffect(() => {
+    timeCount > 0 && setTimeout(() => setTimeCount(timeCount + 1), 1000);
+    }, [timeCount])
 
     return <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <h6>{id}</h6>
@@ -49,7 +83,9 @@ const SocketController = () => {
                     width={48}
                 />
                 <p style={{ fontSize: 16, marginLeft: 20, color: '#aaa' }}>1</p>
-                <p style={{ position: "absolute", bottom: -40, fontSize: 16, color: '#aaffaa' }}>8:2</p>
+                <p style={{ position: "absolute", bottom: -40, fontSize: 16, color: '#aaffaa' }}>
+                    {secondsToTime(timeCount).h}:{secondsToTime(timeCount).m}:{secondsToTime(timeCount).s}
+                </p>
             </div>
 
 
