@@ -44,7 +44,6 @@ const SocketController = () => {
     const setInitialState = async () => {
         let res = await db.ref(`/${id}/1`).get()
         setToggle(res.val())
-        updateTimer()
     }
 
     const updateTimer = async () => {
@@ -58,10 +57,19 @@ const SocketController = () => {
        setInitialState()
     }, [])
 
+    React.useEffect(() => {
+        if(toggle){
+            updateTimer()
+        }
+    }, [toggle])
+
 
 
     React.useEffect(() => {
-    timeCount > 0 && setTimeout(() => setTimeCount(timeCount + 1), 1000);
+    timeCount > 0 && setTimeout(() => {
+        if(toggle)
+            setTimeCount(timeCount + 1)
+    }, 1000);
     }, [timeCount])
 
     return <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
